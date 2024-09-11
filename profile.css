@@ -69,10 +69,10 @@
 #skillChart,
 #auditChart,
 #tasksChart {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(228, 16, 239, 0.808);
   border-radius: 10px;
   padding: 20px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   width: 100%;
   max-width: 600px; 
   text-align: center;
