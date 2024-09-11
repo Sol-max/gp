@@ -167,10 +167,10 @@ function AuditGraph(audits) {
     var yData = ['done', 'received'];
     yData.forEach((el, i) => {
         var arrow;
-        if (el == 'done') {arrow = '\u2191';} else {arrow = '\u2193';}
+        if (el == 'done') { arrow = '\u2191'; } else { arrow = '\u2193'; }
         yData[i] = `${arrow} ${audits[i]} MB ${el}`;
     });
-        
+
     var bars = new Chart(canvas, {
         type: 'bar',
         data: {
@@ -188,16 +188,31 @@ function AuditGraph(audits) {
             responsive: true,
             aspectRatio: 4,
             plugins: {
-                legend: {display: false },
-                tooltip: {callbacks: {label: function (context) {return `${audits[context.dataIndex]} MB`;}}}
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            return `${audits[context.dataIndex]} MB`;
+                        }
+                    }
+                }
             },
             scales: {
-                x: {display: false},
-                y: {position: 'right'}
-            },
+                x: {
+                    display: false,
+                    ticks: {
+                        color: '#ffffff' 
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: '#ffffff' 
+                    }
+                }
+            }
         }
     });
-    return canvas
+    return canvas;
 }
 
 function SkillsGraph(skillMap) {
@@ -207,7 +222,7 @@ function SkillsGraph(skillMap) {
     var xData = [];
     for (const [skill, value] of skillMap.entries()) {
         yData.push(skill);
-        xData.push(value)
+        xData.push(value);
     }
 
     var radarChart = new Chart(canvas, {
@@ -222,22 +237,27 @@ function SkillsGraph(skillMap) {
         options: {
             responsive: true,
             plugins: {
-                legend: {display: false },
-                tooltip: {callbacks: {label: function (context) {return `${xData[context.dataIndex]} %`;}}},
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            return `${xData[context.dataIndex]} %`;
+                        }
+                    }
+                },
                 filler: {
                     propagate: false
-                },
-                'samples-filler-analyser': {
-                    target: 'chart-analyser'
                 }
             },
             scales: {
-                x: {display: false},
-                y: {position: false},
                 r: {
-                    min: 0
-                },
-                
+                    ticks: {
+                        color: '#ffffff', 
+                    },
+                    pointLabels: {
+                        color: '#ffffff' 
+                    }
+                }
             },
             elements: {
                 line: {
@@ -249,8 +269,9 @@ function SkillsGraph(skillMap) {
             }
         }
     });
-    return canvas
+    return canvas;
 }
+
 
 function XPGraph(xps) {
     let canvas = document.createElement('canvas');
@@ -262,18 +283,18 @@ function XPGraph(xps) {
             task: entity.path.split('/')[entity.path.split('/').length - 1]
         };
     });
-    xpData.sort(function (a, b) {return a.date - b.date;});
-    for (let i = 1; i < xpData.length; i++) {xpData[i].xp += xpData[i - 1].xp;}
-    var labels = xpData.map(function (data) {return data.date.toLocaleDateString();});
-    var data = xpData.map(function (data) {return bytesConversion(data.xp, "KB").amount;});
+    xpData.sort(function (a, b) { return a.date - b.date; });
+    for (let i = 1; i < xpData.length; i++) { xpData[i].xp += xpData[i - 1].xp; }
+    var labels = xpData.map(function (data) { return data.date.toLocaleDateString(); });
+    var data = xpData.map(function (data) { return bytesConversion(data.xp, "KB").amount; });
     var lineChart = new Chart(canvas, {
-        type: 'line', 
+        type: 'line',
         data: {
-            labels: labels, 
+            labels: labels,
             datasets: [{
                 label: 'Your XP',
                 data: data,
-                fill: false, 
+                fill: false,
                 borderColor: 'hsl(181, 50%, 53%)',
                 pointBackgroundColor: 'rgba(255, 255, 255, 0.9)',
             }]
@@ -290,10 +311,22 @@ function XPGraph(xps) {
                         }
                     }
                 }
+            },
+            scales: {
+                x: {
+                    ticks: {
+                        color: '#ffffff' 
+                    }
+                },
+                y: {
+                    ticks: {
+                        color: '#ffffff' 
+                    }
+                }
             }
         }
     });
-    return canvas
+    return canvas;
 }
 
 function designAudits(user) {
